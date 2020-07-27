@@ -1,12 +1,15 @@
 const input = document.getElementById('video')
 const chat = document.getElementById('chat')
+const b = document.getElementById('play')
 var intro = 0;
-alert('please, take off your glasses and make sure you can see yourself in cam well. make sure that you are not close to cam too. AN ARM BETWEEN CAM AND YOU, tnx')
+alert('hey')
 Promise.all([
-    faceapi.nets.ssdMobilenetv1.loadFromUri('/models'),
-  faceapi.nets.ageGenderNet.loadFromUri('/models'),
-  faceapi.nets.faceExpressionNet.loadFromUri('/models')
-]).then(startVideo)
+  faceapi.nets.ssdMobilenetv1.loadFromUri('/models'),
+faceapi.nets.ageGenderNet.loadFromUri('/models'),
+faceapi.nets.faceExpressionNet.loadFromUri('/models')
+]).then( startVideo)
+alert('please, take off your glasses and make sure you can see yourself in cam well. make sure that you are not close to cam too. AN ARM BETWEEN CAM AND YOU, tnx')
+
 
 function startVideo() {
   navigator.getUserMedia(
@@ -16,8 +19,12 @@ function startVideo() {
   )
 }
 
-video.addEventListener('play',() => {
-    setTimeout(async()=>{
+b.addEventListener('click',async () => {
+  
+ 
+  b.className = 'button is-loading'
+  const d = await faceapi.detectSingleFace(input).withAgeAndGender();
+  
         function intro(obj){
             chat.innerHTML +=`<div class="notification is-danger is-light ">I can see you).<br>
             Your face looks like about ${Math.round(obj['age'])} years old and i think<br>
@@ -29,8 +36,10 @@ video.addEventListener('play',() => {
             
             
         }
-        const d = await faceapi.detectSingleFace(input).withAgeAndGender(); await intro(d)},1000)
-    setTimeout(5000)
+        b.className = 'Disabled button is-primary'
+        await intro(d)
+        
+      
     setInterval(async()=>{
         function intro(obj){
             chat.innerHTML +=`<div class="notification is-danger is-light ">I still can see you).<br>
@@ -43,7 +52,7 @@ video.addEventListener('play',() => {
             DONT GO</div>`;
             console.log(obj)}
     const detectionWithAgeAndGender = await faceapi.detectSingleFace(input).withFaceExpressions()
-    console.log('detectionWithAgeAndGender :>> ', detectionWithAgeAndGender);await intro(detectionWithAgeAndGender)},5000);
+    console.log('detectionWithAgeAndGender :>> ', detectionWithAgeAndGender);await intro(detectionWithAgeAndGender)},4000);
 })
 
 
