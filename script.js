@@ -1,15 +1,12 @@
 const input = document.getElementById('video')
 const chat = document.getElementById('chat')
-const b = document.getElementById('play')
 var intro = 0;
-alert('hey')
-Promise.all([
-  faceapi.nets.ssdMobilenetv1.loadFromUri('/models'),
-faceapi.nets.ageGenderNet.loadFromUri('/models'),
-faceapi.nets.faceExpressionNet.loadFromUri('/models')
-]).then( startVideo)
 alert('please, take off your glasses and make sure you can see yourself in cam well. make sure that you are not close to cam too. AN ARM BETWEEN CAM AND YOU, tnx')
-
+Promise.all([
+    faceapi.nets.ssdMobilenetv1.loadFromUri('/models'),
+  faceapi.nets.ageGenderNet.loadFromUri('/models'),
+  faceapi.nets.faceExpressionNet.loadFromUri('/models')
+]).then(startVideo)
 
 function startVideo() {
   navigator.getUserMedia(
@@ -19,12 +16,8 @@ function startVideo() {
   )
 }
 
-b.addEventListener('click',async () => {
-  
- 
-  b.className = 'button is-loading'
-  const d = await faceapi.detectSingleFace(input).withAgeAndGender();
-  
+video.addEventListener('play',() => {
+    setTimeout(async()=>{
         function intro(obj){
             chat.innerHTML +=`<div class="notification is-danger is-light ">I can see you).<br>
             Your face looks like about ${Math.round(obj['age'])} years old and i think<br>
@@ -36,10 +29,8 @@ b.addEventListener('click',async () => {
             
             
         }
-        b.className = 'Disabled button is-primary'
-        await intro(d)
-        
-      
+        const d = await faceapi.detectSingleFace(input).withAgeAndGender(); await intro(d)},1000)
+    setTimeout(5000)
     setInterval(async()=>{
         function intro(obj){
             chat.innerHTML +=`<div class="notification is-danger is-light ">I still can see you).<br>
@@ -52,7 +43,7 @@ b.addEventListener('click',async () => {
             DONT GO</div>`;
             console.log(obj)}
     const detectionWithAgeAndGender = await faceapi.detectSingleFace(input).withFaceExpressions()
-    console.log('detectionWithAgeAndGender :>> ', detectionWithAgeAndGender);await intro(detectionWithAgeAndGender)},4000);
+    console.log('detectionWithAgeAndGender :>> ', detectionWithAgeAndGender);await intro(detectionWithAgeAndGender)},5000);
 })
 
 
