@@ -3,9 +3,9 @@ const chat = document.getElementById('chat')
 var intro = 0;
 alert('please, take off your glasses and make sure you can see yourself in cam well. make sure that you are not close to cam too. AN ARM BETWEEN CAM AND YOU, tnx')
 Promise.all([
-    faceapi.nets.ssdMobilenetv1.loadFromUri('/models'),
-  faceapi.nets.ageGenderNet.loadFromUri('/models'),
-  faceapi.nets.faceExpressionNet.loadFromUri('/models')
+    faceapi.nets.ssdMobilenetv1.loadFromUri('Creeping_you_on_OnlyCams/models'),
+  faceapi.nets.ageGenderNet.loadFromUri('Creeping_you_on_OnlyCams/models'),
+  faceapi.nets.faceExpressionNet.loadFromUri('Creeping_you_on_OnlyCams/models')
 ]).then(startVideo)
 
 function startVideo() {
